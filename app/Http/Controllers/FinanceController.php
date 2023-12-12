@@ -9,14 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 class FinanceController extends Controller
 {
-    public function create()
-    {
-        return view('finance.create');
-    }
-
     public function store(Request $request)
     {
-        // Set teams_id to the current user's team ID
         $teams_id = Auth::user()->currentTeam->id;
 
         $request->validate([
@@ -36,7 +30,7 @@ class FinanceController extends Controller
             'file_id' => 'nullable|numeric',
         ]);
 
-        Finance::create([
+        $finance = Finance::create([
             'user_id' => Auth::id(),
             'teams_id' => $teams_id,
             'finance_title' => $request->input('finance_title'),
@@ -53,8 +47,43 @@ class FinanceController extends Controller
             'image_path' => $request->input('image_path'),
             'category_id' => $request->input('category_id'),
             'file_id' => $request->input('file_id'),
+            
         ]);
+        $teamId = Auth::user()->currentTeam->id;
 
-        return redirect()->route('finance.create')->with('message', 'Finance record created successfully.');
+        activity()
+            ->causedBy( $teamId)
+            ->performedOn($finance)
+            ->withProperties([
+                'action' => 'created' ,
+                'team_id' => $teams_id,
+                'attributes' => $request->except('_token'),
+
+            ])
+            ->log('Finance record created');
+
+        return redirect()->route('add')->with('message', 'Finance record created successfully.');
     }
+    public function destroy(Request $request)
+    {
+        $id = $request->input('id'); // Get the 'id' from the request body
+    
+        $finance = Finance::findOrFail($id);
+    
+        $finance->delete();
+    
+        $teamId = Auth::user()->currentTeam->id;
+    
+        activity()
+            ->causedBy($teamId)
+            ->performedOn($finance)
+            ->withProperties([
+                'action' => 'deleted',
+                'team_id' => $teamId,
+            ])
+            ->log('Finance record deleted');
+    
+        return redirect()->route('livewire.dashboard')->with('message', 'Finance record deleted successfully.');
+    }
+    
 }

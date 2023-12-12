@@ -27,11 +27,14 @@ class FinanceComponent extends Component
         if ($user && $user->currentTeam) {
             $this->finances = Finance::with('items') 
                 ->where('teams_id', $user->currentTeam->id)
+                ->latest('created_at')
+
                 ->get();
         } else {
             $this->finances = collect();
         }
     }
+    
     public function mount()
     {
         $this->getTeamFinance();
@@ -48,5 +51,4 @@ class FinanceComponent extends Component
 
         return view('livewire.finance-component');
     }
-
 }

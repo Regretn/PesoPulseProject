@@ -85,9 +85,8 @@
             <div class="bg-white p-4 rounded shadow-lg w-full h-full max-w-screen-md overflow-y-auto">
                 <div class="flex">
                 <p class="text-lg font-bold">Transaction</p>
-                <!-- <p x-text="'Selected item ID: ' + teamData.id">Transaction</p> -->
 
-                 <button @click="showModal = false" class=" text-gray-500 p-2 ml-auto">Close</button>
+                 <button @click="showModal = false" class="text-gray-500 p-2 ml-auto">Close</button>
                 </div>
             <div>
             <form style="margin-top: 2rem;">
@@ -175,22 +174,7 @@
 >
 
 
->
-        </form>
-            </div>
-        </div>
-    </div>
 </div>
-</div>
-</div>
-
-</div>
-
-
-
-
-
-
 
 
 

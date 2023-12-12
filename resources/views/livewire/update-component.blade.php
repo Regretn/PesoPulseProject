@@ -77,8 +77,19 @@
                 </tbody>
             </table>
             </div>
-
-
+            
+            <img
+  class="w-full max-w-sm h-auto mx-auto transition-all duration-300 rounded-lg cursor-pointer filter grayscale hover:grayscale-0"
+  :src="'{{ asset('no_image.svg') }}'"
+  alt="image description"
 >
+
+<button
+        type="button"
+        class="mt-4 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-all duration-300"
+        @click="deleteRecord"
+    >
+        Delete
+    </button>
 </form>
 </div>

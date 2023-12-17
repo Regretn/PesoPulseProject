@@ -2,13 +2,13 @@
 
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\FinanceLogController;
-use App\Livewire\Counter;
 use App\Livewire\FinanceComponent;
 use App\Livewire\FinanceForm;
 use App\Livewire\FinanceLog;
 use App\Livewire\FinancePost;
 use App\Livewire\UpdateComponent;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Counter;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,13 +55,14 @@ Route::middleware([
     })->name('historylog');
 });
 
-Route::get('/counter', Counter::class);
-Route::get('/finance-component', FinanceComponent::class);
-Route::get('/finance-log', FinanceLog::class)->name('finance.log');
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/message', function () {
+        return view('message');
+    })->name('message');
+});
 
 Route::get('/finance-post', FinancePost::class)->name('finance-post');
-Route::get('/finance/create', [FinanceController::class, 'create'])->name('finance.create');
-
-Route::post('/finance/store', [FinanceController::class, 'store'])->name('finance.store');
-
-Route::post('/finances', [FinanceController::class, 'destroy'])->name('finances.destroy');

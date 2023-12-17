@@ -48,21 +48,4 @@ class Finance extends Model
         return $this->belongsTo(ImportedFile::class);
     }
 
-    public static function findSimilarKeys($keys)
-    {
-        $financeColumns = Schema::getColumnListing('finances'); 
-        return array_intersect($keys, $financeColumns);
-    }
-
-    public static function createOrUpdate($data)
-    {
-        $existingFinance = Finance::findSimilar($data['finance_title']);
-
-        if (!$existingFinance) {
-            Finance::create($data);
-        } else {
-            Finance::where('id', $existingFinance->id)->update($data);
-        }
-    }
-
 }

@@ -19,10 +19,10 @@ return new class extends Migration
             $table->foreign('finance_id')->references('id')->on('finances');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('item_name');
-            $table->integer('item_quantity');
-            $table->integer('item_unit_price');
-            $table->integer('item_total_amount');
+            $table->string('item_name')->nullable();
+            $table->integer('item_quantity')->nullable();
+            $table->integer('item_unit_price')->nullable();
+            $table->integer('item_total_amount')->nullable();
             $table->timestamps();
         });
     }

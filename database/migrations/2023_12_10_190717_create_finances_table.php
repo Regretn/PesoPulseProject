@@ -27,7 +27,7 @@ return new class extends Migration
             $table->integer('supplier_phone')->nullable();
             $table->integer('finance_tax_amount')->nullable();
             $table->integer('finance_tax_rate')->nullable();
-            $table->integer('document_type')->nullable(); 
+            $table->string('document_type')->nullable(); 
             $table->unsignedBigInteger('file_id')->nullable(); 
             $table->foreign('file_id')->references('id')->on('imported_files')->onDelete('cascade');
             $table->text('image_path')->nullable();

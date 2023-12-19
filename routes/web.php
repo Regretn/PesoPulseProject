@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\FinanceLogController;
+use App\Http\Livewire\MindeeComponent;
 use App\Livewire\FinanceComponent;
 use App\Livewire\FinanceForm;
 use App\Livewire\FinanceLog;

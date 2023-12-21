@@ -19,8 +19,9 @@ class Item extends Model
     ];
     public function finance()
     {
-        return $this->belongsTo(Finance::class);
+        return $this->belongsTo(Finance::class, 'finance_id');
     }
+    
     public function user()
     {
         return $this->belongsTo(User::class);

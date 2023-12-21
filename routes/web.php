@@ -10,6 +10,7 @@ use App\Livewire\FinancePost;
 use App\Livewire\UpdateComponent;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Counter;
+use App\Livewire\Transaction;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,3 +68,4 @@ Route::middleware([
 });
 
 Route::get('/finance-post', FinancePost::class)->name('finance-post');
+Route::get('/transaction', Transaction::class);

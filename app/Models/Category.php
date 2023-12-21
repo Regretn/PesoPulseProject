@@ -18,9 +18,9 @@ class Category extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function finance()
+    public function finances()
     {
-        return $this->belongsTo(Finance::class);
+        return $this->hasMany(Finance::class);
     }
     public function team()
     {

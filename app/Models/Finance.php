@@ -35,13 +35,14 @@ class Finance extends Model
     {
         return $this->hasMany(Item::class);
     }
+    
     public function team()
     {
         return $this->belongsTo(Team::class);
     }
     public function category()
     {
-        return $this->hasMany(Category::class);
+        return $this->belongsTo(Category::class);
     }
     public function importedFile()
     {

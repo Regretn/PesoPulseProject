@@ -65,12 +65,12 @@ class Transaction extends Component
     public $extractedData; 
 
     public $deleteID;
-
     public $search = '';
     public $filters = [];
     public $filter = "";
     public $transacType = null;
-
+    public $startDate;
+    public $endDate;
     public function updatingSearch()
     {
         $this->resetPage();
@@ -89,7 +89,17 @@ class Transaction extends Component
             $this->filters[$categoryId] = true;
         }
     }
-    
+
+    public function removeFilter()
+    {
+        $this->search = null;
+        $this->filters = [];
+        $this->filter = "";
+        $this->transacType = null;
+        $this->startDate = null;
+        $this->endDate = null;
+    }
+
     public function updateTransactionType($typeId = null)
     {
         $this->transacType = $typeId;
@@ -98,7 +108,6 @@ class Transaction extends Component
     public function render()
     {
         $this->getCategory();
-    
         $user = Auth::user();
     
         $query = Finance::where('finance_title', 'like', '%' . $this->search . '%')
@@ -113,12 +122,21 @@ class Transaction extends Component
             $query->where('transaction_type', $this->transacType);
         }
     
+        if ($this->startDate) {
+            $query->whereDate('finance_purchase_date', '>=', $this->startDate);
+        }
+    
+        if ($this->endDate) {
+            $query->whereDate('finance_purchase_date', '<=', $this->endDate);
+        }
+    
         $finances = $query->latest('created_at')->paginate(10);
     
         return view('livewire.transaction', [
             'teamFinance' => $finances,
         ]);
     }
+    
     
 
   public function predict()
@@ -267,6 +285,7 @@ class Transaction extends Component
         
     public function submitForm()
     {
+        try{
         $user = Auth::user();
         
         $this->validate([
@@ -333,19 +352,49 @@ class Transaction extends Component
 
         Log::info('Submitted Items:', $this->items);
         $this->deleteAddContent();
+
+        session()->flash('successSubmit', 'Transaction record created successfully');
+
+        } catch (\Exception $e) {
+            session()->flash('errorDelete', 'Failed to insert Transaction record. ' . $e->getMessage());
+        }
     }
+
 
     
     public function deleteFinance($id)
     {
-        try{
-            Finance::find($id)->delete();
-            session()->flash('success',"Post Deleted Successfully!!");
-        }catch(\Exception $e){
-            session()->flash('error',"Something goes wrong!!");
+
+        $user = Auth::user();
+        $teamId = Auth::user()->currentTeam->id;
+
+        try {
+            $finance = Finance::find($id);
+            if ($finance) {
+                $finance->delete();
+                session()->flash('success', "Post Deleted Successfully!!");
+            } else {
+                session()->flash('error', "Post not found or already deleted!!");
+            }
+
+            activity()
+            ->causedBy($user)
+
+            ->performedOn($finance)
+            ->withProperties([
+                'action' => 'deleted' ,
+                'team_id' => $teamId,
+                'title'  => $finance->finance_title,
+
+            ])
+
+            ->log('Finance record deleted');
+
+        } catch (\Exception $e) {
+            session()->flash('error', "Something went wrong!!");
         }
     }
-
+    
     
     public function fetchFinance($id)
     {
@@ -398,6 +447,8 @@ class Transaction extends Component
     
     public function updateFinance($id)
     {
+        try {
+
         $user = Auth::user();
     
         $this->validate([
@@ -437,8 +488,6 @@ class Transaction extends Component
         ]);
     
         $this->finan = Finance::findOrFail($id);
-
-        // Update finance attributes
         $filePath = optional($this->file)->store('public/finance_images');
         $this->finan->update([
             'finance_title'         => $this->finance_title,
@@ -499,7 +548,13 @@ class Transaction extends Component
                 'title'   => $this->finance_title,
             ])
             ->log('Finance record updated');
+            
+            session()->flash('success', 'Finance record updated successfully');
+
+        } catch (\Exception $e) {
+            session()->flash('error', 'Failed to update finance record. ' . $e->getMessage());
+        }
     }
-    
+
 
 }

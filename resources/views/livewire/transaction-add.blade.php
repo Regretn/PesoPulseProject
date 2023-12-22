@@ -23,6 +23,19 @@
                                     </button>
                                 </div>
                                 <div>
+                                
+                                <div class="flex justify-center items-center h-full">
+                                    @if(session()->has('successSubmit'))
+                                        <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                                            <span class="font-medium">Success!</span> {{ session('successSubmit') }}
+                                        </div>
+                                    @endif
+                                    @if(session()->has('errorDelete'))
+                                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                            <span class="font-medium">Error!</span> {{ session('successSubmit') }}
+                                         </div>
+                                    @endif
+                                </div>
 
                             <form wire:submit.prevent="submitForm">
 
@@ -182,11 +195,13 @@
 
                             <div class="flex justify-end">
                             <div>
+                            <!-- Loading Page -->
                             <div wire:loading wire:target="submitForm" class="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
                             <div class="flex items-center justify-center">
-                                <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-green-200"></div>
+                                <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-green- 200"></div>
                             </div>
                         </div>
+                        <!-- End of Loadign -->
                             </div>
                                 <button type="submit" class="inline-flex items-center bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center text-white dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                                     <svg class="mr-1 -ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -202,4 +217,5 @@
                         </div>
                     </div>
                     </template>
+                </div>
                 </div>

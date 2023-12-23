@@ -35,7 +35,6 @@
 
                                                         <form wire:submit.prevent="updateFinance({{$finance->id}})">
 
-                                                            <!-- Choose between Add and and Items -->
                                                             <div x-data="{ tab: 'add' }" id="fullWidthTab" data-tabs-toggle="#fullWidthTabContent" role="tablist">
                                                                 <div class="font-medium text-center text-gray-500 divide-x divide-gray-200 rounded-lg sm:flex dark:divide-gray-600 dark:text-gray-400">
                                                                 <a :class="{ 'text-green-500': tab === 'add' }" x-on:click.prevent="tab = 'add'" href="#" class="inline-block w-full p-4 rounded-tl-lg hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600">Add Transaction</a>
@@ -43,7 +42,7 @@
                                                                 <a :class="{ 'text-green-500': tab === 'image' }" x-on:click.prevent="tab = 'image'" href="#" class="inline-block w-full p-4 rounded-tr-lg hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600">Image</a>                                
 
                                                             </div>
-                                                            <!-- Content for Add -->
+                                                            <!-- Content for Edot -->
 
                                                             <div x-show="tab === 'add'">
 

@@ -77,7 +77,13 @@ Route::middleware([
         return view('file-upload');
     })->name('file-upload'); 
 });
-
+Route::middleware([
+    config('jetstream.auth_session'),
+])->group(function () {
+    Route::get('/loginss', function () {
+        return view('logins');
+    })->name('logins'); 
+});
 Route::get('/finance-post', FinancePost::class)->name('finance-post');
 Route::get('/transaction', Transaction::class);
 

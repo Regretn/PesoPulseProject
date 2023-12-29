@@ -181,8 +181,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            </template>
-                                            </div>
+                                        </template>
+                                        </div>
                                             <div>
                                             </x-slot>
                                         </x-dropdown>

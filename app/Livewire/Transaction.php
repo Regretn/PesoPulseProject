@@ -24,18 +24,26 @@ class Transaction extends Component
     public $name;
 
     #[Rule('numeric', message: 'should be numeric')]
+    #[Rule('max:7', message: 'should not exceed 7 characters')]
+
     public $qty = 0;
 
     #[Rule('numeric', message: 'should be numeric')]
+    #[Rule('max:7', message: 'should not exceed 7 characters')]
+
     public $unitPrice = 0;
 
     #[Rule('numeric', message: 'should be numeric')]
+    #[Rule('max:9999999', message: 'should not exceed 7 digits')]
+
     public $totalAmount = 0;
 
     //Add Finance
     public $finance_title;
 
     #[Rule('numeric', message: 'should be numeric')]
+    #[Rule('max:9999999', message: 'should not exceed 7 digits')]
+
     public $finance_amount;
     public $finance_description;
     public $finance_purchase_date;
@@ -43,10 +51,16 @@ class Transaction extends Component
     public $supplier_address;
     public $supplier_name;
     #[Rule('numeric', message: 'should be numeric')]
+    #[Rule('max:999999999999', message: 'should not exceed 12 digits')]
+
     public $supplier_phone;
     #[Rule('numeric', message: 'should be numeric')]
+    #[Rule('max:9999999', message: 'should not exceed 7 digits')]
+
     public $finance_tax_amount;
     #[Rule('numeric', message: 'should be numeric')]
+    #[Rule('max:9999999', message: 'should not exceed 7 digits')]
+
     public $finance_tax_rate;
     public $document_type;
     public $image_path;

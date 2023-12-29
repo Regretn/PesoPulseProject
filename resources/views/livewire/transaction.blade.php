@@ -1,7 +1,8 @@
 
 
 <div>
-    <div>                  @include('livewire.transaction-add')
+    <div>                  
+        @include('livewire.transaction-add')
 </div>
 <!-- Start block -->
 <section >
@@ -136,7 +137,6 @@
                                         <li>
 
                                         <div x-data="{ open: false }">
-
                                             <button wire:click.prevent="fetchFinance({{$finance->id}})" @click="open = ! open" type="button" id="createProductModalButton"  class="flex w-full items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-gray-700 dark:text-gray-200">
                                                 <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                     <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />

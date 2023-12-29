@@ -4,7 +4,7 @@
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Team Logs</h3>
         </div>
         <ol class="relative border-l border-gray-200 dark:border-gray-700">
-            @forelse ($teamHistoryLog as $log)
+            @forelse ($teamHistory as $log)
                 <li class="mb-10 ml-4">
                     <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white dark:border-gray-800 dark:bg-gray-700"></div>
                     <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
@@ -14,7 +14,7 @@
                     <p class="flex items-center mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
                         <img style="margin-right: 1%;" class="w-8 h-8 rounded-full object-cover" src="{{ $log->causer->profile_photo_url }}" alt="{{ $log->causer->name }}">
                         @if(isset($log->properties['action']))
-                            {{ $log->causer->name }} {{ $log->properties['action'] }} a Finance Record
+                            {{ $log->causer->name }} {{ $log->properties['action'] }} a Finance
                             @if(isset($log->properties['title']))
                                 titled "{{ $log->properties['title'] }}"
                             @endif
@@ -31,5 +31,10 @@
                 </div>
             @endforelse
         </ol>
+    </div>
+    <div>
+        <nav class=" md:items-center space-y-3 md:space-y-0 p-4" aria-label="Table navigation">
+            {{ $teamHistory->links() }}
+        </nav>
     </div>
 </div>

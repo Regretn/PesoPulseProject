@@ -24,6 +24,8 @@ class CategoriesTableSeeder extends Seeder
             'Education',
             'Travel',
             'Gifts/Donations',
+            'Others',
+
         ];
 
         $userId = 1; // Replace this with the actual user ID you want to associate with the categories.

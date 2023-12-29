@@ -6,23 +6,25 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Spatie\Activitylog\Models\Activity;
+use Livewire\WithPagination;
 
 class FinanceLog extends Component
 {
+    use WithPagination;
+
     public $teamHistoryLog;
 
-    public function mount()
-    {
-        $currentTeamId = Auth::user()->currentTeam->id;
-        $user = User::find(Auth::id());
-        $this->teamHistoryLog = Activity::
-            where('properties->team_id', $currentTeamId)
-            ->latest('created_at')
-            ->get();
-    }
+ 
 
     public function render()
     {
-        return view('livewire.finance-log');
+        $currentTeamId = Auth::user()->currentTeam->id;
+        $user = User::find(Auth::id());
+        return view('livewire.finance-log', [
+            'teamHistory' => Activity::
+            where('properties->team_id', $currentTeamId)
+            ->latest('created_at')
+            ->paginate(10),
+        ]);
     }
 }

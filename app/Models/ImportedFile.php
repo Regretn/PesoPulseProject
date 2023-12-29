@@ -15,6 +15,7 @@ class ImportedFile  extends Model
         'teams_id',
         'user_id',
         'file_name',
+        'file_path',
         'date_start',
         'date_end',
     ];

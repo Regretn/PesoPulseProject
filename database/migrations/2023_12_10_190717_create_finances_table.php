@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('finance_title');
             $table->integer('finance_amount');
             $table->text('finance_description')->nullable();
-            $table->date('finance_purchase_date')->nullable();
+            $table->date('finance_purchase_date')->default(now());
             $table->integer('transaction_type')->nullable();
             $table->string('supplier_address')->nullable();
             $table->string('supplier_name')->nullable();
@@ -31,12 +31,12 @@ return new class extends Migration
             $table->unsignedBigInteger('file_id')->nullable(); 
             $table->foreign('file_id')->references('id')->on('imported_files')->onDelete('cascade');
             $table->text('image_path')->nullable();
-            $table->unsignedBigInteger('category_id')->nullable();
+            $table->unsignedBigInteger('category_id')->default(17); // Default to category with id 17
             $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();
-            
         });
     }
+    
 
     /**
      * Reverse the migrations.

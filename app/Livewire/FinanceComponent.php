@@ -3,11 +3,14 @@
 namespace App\Livewire;
 
 use App\Models\Category;
+use App\Models\ImportedFile;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use App\Models\Finance;
+use App\Models\Message;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Activitylog\Models\Activity;
 
 class FinanceComponent extends Component
@@ -31,6 +34,7 @@ class FinanceComponent extends Component
     public $category_id;
     public $file_id;
     public $teamHistoryLog;
+    public $messages;
 
     protected $rules = [
         'finance_title' => 'required|string',
@@ -188,11 +192,66 @@ class FinanceComponent extends Component
                 ->get();
         }
 
-    public function render()
+        public function render()
+        {
+            $user = Auth::user();
+            $importedFiles = ImportedFile::where('teams_id', $user->currentTeam->id)->orderBy('created_at', 'desc')->get();
+        
+            $this->getTeamFinance();
+            $this->getCategory();
+            $this->messages = Message::where('teams_id', $user->currentTeam->id)
+                ->orderBy('created_at', 'desc')
+                ->get();
+        
+            return view('livewire.finance-component', compact('importedFiles'));
+        }
+        
+    public function deleteMessage($id)
     {
-        $this->getTeamFinance();
-        $this->getCategory();
-
-        return view('livewire.finance-component');
+        try {
+            $message = Message::find($id);
+            $message->replies()->delete();
+            $message->delete();
+    
+            session()->flash('success', "Post Deleted Successfully!!");
+        } catch (\Exception $e) {
+            session()->flash('error', "Something went wrong!!");
+        }
     }
+
+
+    public function deleteFile($fileId)
+    {
+        $importedFile = ImportedFile::findOrFail($fileId);
+    
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($importedFile)
+            ->withProperties([
+                'action'  => 'Deleted',
+                'team_id' => Auth::user()->currentTeam->id,
+                'title'   => $importedFile->file_name,
+            ])
+            ->log('Deleted a File');
+    
+        $importedFile->delete();
+
+        session()->flash('message', 'File deleted successfully!');
+    }
+    
+
+    public function downloadFile($fileId)
+    {
+        $importedFile = ImportedFile::findOrFail($fileId);
+    
+        $tempFilePath = tempnam(sys_get_temp_dir(), 'download');
+    
+        file_put_contents($tempFilePath, $importedFile->file_path);
+    
+        return response()->download($tempFilePath, $importedFile->file_name)->deleteFileAfterSend(true);
+        
+    }
+    
+
+
 }

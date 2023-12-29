@@ -49,4 +49,6 @@ class Finance extends Model
         return $this->belongsTo(ImportedFile::class);
     }
 
+
+
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\FinanceLogController;
 use App\Http\Livewire\MindeeComponent;
+use App\Livewire\ExcelReader;
 use App\Livewire\FinanceComponent;
 use App\Livewire\FinanceForm;
 use App\Livewire\FinanceLog;
@@ -67,5 +68,20 @@ Route::middleware([
     })->name('message');
 });
 
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/file-upload', function () {
+        return view('file-upload');
+    })->name('file-upload'); 
+});
+
 Route::get('/finance-post', FinancePost::class)->name('finance-post');
 Route::get('/transaction', Transaction::class);
+
+
+Route::get('/excel-reader', ExcelReader::class);
+Route::get('/excel-readers', ExcelReader::class)->name('livewire.excel-reader');
+

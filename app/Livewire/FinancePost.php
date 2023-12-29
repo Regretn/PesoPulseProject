@@ -74,7 +74,5 @@ class FinancePost extends Component
         ]);
 
         session()->flash('message', 'Finance record created successfully.');
-
-        // You can redirect to a different page or perform any other actions after creating the record.
     }
 }

@@ -18,13 +18,13 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('file_name');
+            $table->text('file_path');
             $table->date('date_start')->nullable();
             $table->date('date_end')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
     }
-
     /**
      * Reverse the migrations.
      */

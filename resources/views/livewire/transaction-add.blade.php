@@ -1,16 +1,19 @@
 <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
         <div x-data="{ open: false }">
-        <div class="flex">
-        <button @click="open = ! open" type="button" id="createProductModalButton" class="flex items-center justify-center text-black bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+        <div class="flex p-3 gap-2.5">
+        <button @click="open = ! open" type="button" id="createProductModalButton" class="flex items-center justify-center text-black bg-base bg-opacity-60 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
             <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
             </svg>
             Add Transaction
         </button>
-        <a href="/file-upload" type="button" id="createProductModalButton" class="flex items-center justify-center text-black bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
-            <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <a href="/file-upload" type="button" id="createProductModalButton" class="flex items-center justify-center text-black bg-base bg-opacity-60 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+            {{-- <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
-            </svg>
+            </svg> --}}
+            <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 19">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15h.01M4 12H2a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-3m-5.5 0V1.07M5.5 5l4-4 4 4"/>
+              </svg>
             Upload File
         </a>
         </div>
@@ -31,7 +34,7 @@
                         </button>
                     </div>
                     <div>
-                    
+
                     <div class="flex justify-center items-center h-full">
                         @if(session()->has('successSubmit'))
                             <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
@@ -51,7 +54,7 @@
                     <div x-data="{ tab: 'add' }" id="fullWidthTab" data-tabs-toggle="#fullWidthTabContent" role="tablist">
                         <div class="font-medium text-center text-gray-500 divide-x divide-gray-200 rounded-lg sm:flex dark:divide-gray-600 dark:text-gray-400">
                         <a :class="{ 'text-green-500': tab === 'add' }" x-on:click.prevent="tab = 'add'" href="#" class="inline-block w-full p-4 rounded-tl-lg hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600">Add Transaction</a>
-                        <a :class="{ 'text-green-500': tab === 'item' }" x-on:click.prevent="tab = 'item'" href="#" class="inline-block w-full p-4 rounded-tr-lg hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600">Transaction Items</a>                                
+                        <a :class="{ 'text-green-500': tab === 'item' }" x-on:click.prevent="tab = 'item'" href="#" class="inline-block w-full p-4 rounded-tr-lg hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600">Transaction Items</a>
                         </div>
                     <!-- Content for Add -->
                     <div class="col-span-2 sm:col-span-1">
@@ -60,7 +63,7 @@
                                 <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" type="file" wire:model="file" id="file" onchange="previewImage()" required="">
 
                             </div>
-                            @if ($file) 
+                            @if ($file)
                             <div class="col-span-2 flex-center flex justify-items-center w-6/12" style="margin-left: 25%; margin-top: 2%; margin-bottom: 2%;">
                                 <img src="{{ $file->temporaryUrl() }}">
                             </div>
@@ -78,7 +81,7 @@
                         </form>
 
 
-                        
+
                     </div>
                         <div x-show="tab === 'add'">
                         <div class="pt-4 grid gap-4 mb-4 sm:grid-cols-2">
@@ -98,7 +101,7 @@
                                     <option value="1">Expense</option>
                                 </select>
                             </div>
-                            
+
                             <div>
                                 <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
                                 <div class="relative">
@@ -145,7 +148,7 @@
                             <div class="sm:col-span-2"><label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label><textarea id="description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Write product description here"></textarea></div>
                         </div>
                         </div>
-                        
+
                     <!-- Content for Items -->
                         <div x-show="tab === 'item'">
                         <div class="" id="about">
@@ -162,19 +165,26 @@
                             <div>
                                 <label for="unitPrice" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Item Unit Price @error('unitPrice') <em style="color: red;" >{{$message}}</em>@enderror</label>
                                 <input wire:model.live="unitPrice" type="text" name="unitPrice" id="unitPrice" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="₱0" required="">
-                            </div>   
+                            </div>
                             <div>
                                 <label for="totalAmount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Item total Amount @error('totalAmount') <em style="color: red;">{{$message}}</em>@enderror</label>
                                 <input wire:model.live="totalAmount" type="text" step="0.01 name="totalAmount" id="totalAmount" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="₱0" required="">
                             </div>
-                            <button type="submit" class="btn btn-primary">Add Item</button>
+                        </div>
+                        <div class="my-2.5 flex items-end justify-end">
+                            <button type="submit" class="flex items-center justify-center p-2.5 w-1/4 btn btn-primary bg-green-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center text-white">
+                                <svg class="mr-1 -ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                                </svg>
+                                Add Item
+                            </button>
                         </div>
                     </form>
                         <div class="overflow-x-auto">
                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
-                                    <th scope="col" class="px-4 py-4">Item Name</th> 
+                                    <th scope="col" class="px-4 py-4">Item Name</th>
                                     <th scope="col" class="px-4 py-3">Item Qty</th>
                                     <th scope="col" class="px-4 py-3">Item Unit Price</th>
                                     <th scope="col" class="px-4 py-3">Item total Amount</th>
@@ -206,7 +216,7 @@
 
                 </div>
 
-                <div class="flex justify-end">
+                <div class="my-2 flex justify-end">
                 <div>
                 <!-- Loading Page -->
                 <div wire:loading wire:target="submitForm" class="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
@@ -226,7 +236,7 @@
             </form>
                 </div>
                 </div>
-                </div>                           
+                </div>
             </div>
         </div>
         </template>

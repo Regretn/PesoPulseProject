@@ -1,7 +1,7 @@
 
 
 <div>
-    <div>                  
+    <div>
         @include('livewire.transaction-add')
 </div>
 <!-- Start block -->
@@ -20,11 +20,11 @@
                         </div>
                     </form>
                 </div>
-                
-                
+
+
                 <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
                   <button wire:click="removeFilter" class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" type="button">
-                        Remove Filter 
+                        Remove Filter
                     </button>
                     <div class="overflow-x-auto">
 
@@ -39,12 +39,12 @@
                     <input wire:model.live="endDate" type="date" name="document-name" id="document-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                     </div>
                     </div>
-                  
+
                     <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown" class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" type="button">
                         <svg class="-ml-1 mr-1.5 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path clip-rule="evenodd" fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
                         </svg>
-                        Transaction 
+                        Transaction
                     </button>
                     <div id="actionsDropdown" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                         <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="actionsDropdownButton">
@@ -88,7 +88,7 @@
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr >
-                            <th scope="col" class="px-4 py-4">Name</th> 
+                            <th scope="col" class="px-4 py-4">Name</th>
                             <th scope="col" class="px-4 py-3">Category</th>
                             <th scope="col" class="px-4 py-3">Type</th>
                             <th scope="col" class="px-4 py-3">Description</th>
@@ -102,7 +102,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                     @foreach ($teamFinance as $finance)
                     <tr class="border-b dark:border-gray-700" wire:key="{{$finance->id}}">
                         <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $finance->finance_title }}</td>
@@ -114,10 +114,10 @@
                             @else
                                 {{ $finance->finance_description }}
                             @endif
-                        </td>                        
+                        </td>
                         <td class="px-4 py-3">${{ number_format($finance->finance_amount, 2) }}</td>
                         <td class="px-4 py-3">${{ number_format($finance->finance_tax_amount, 2) }}</td>
-                        
+
                         <td class="px-4 py-3">{{ $finance->items->count() }}</td>
                         <td class="px-4 py-3">{{ $finance->finance_purchase_date }}</td>
                         <td class="px-4 py-3">
@@ -170,10 +170,10 @@
                                                         </svg>
                                                         <p class="mb-4 text-gray-500 dark:text-gray-300">Are you sure you want to delete this item?</p>
                                                         <div class="flex justify-center items-center space-x-4">
-                                                            
+
                                                             <button @click="open = false" type="button" class="py-2 px-3 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No, cancel</button>
                                                             <button wire:click.prevent="deleteFinance({{$finance->id}})" class="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">Yes, I'm sure</button>
-                                                            
+
                                                         </div>
                                                         <div wire:loading>
                                                                 Deleting...

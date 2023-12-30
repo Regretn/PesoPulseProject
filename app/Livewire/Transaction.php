@@ -24,12 +24,12 @@ class Transaction extends Component
     public $name;
 
     #[Rule('numeric', message: 'should be numeric')]
-    #[Rule('max:7', message: 'should not exceed 7 characters')]
+    #[Rule('max:9999999', message: 'should not exceed 7 characters')]
 
     public $qty = 0;
 
     #[Rule('numeric', message: 'should be numeric')]
-    #[Rule('max:7', message: 'should not exceed 7 characters')]
+    #[Rule('max:9999999', message: 'should not exceed 7 characters')]
 
     public $unitPrice = 0;
 
@@ -76,7 +76,7 @@ class Transaction extends Component
     //Mindee
     public $file;
     public $result;
-    public $extractedData; 
+    public $extractedData;
 
     public $deleteID;
     public $search = '';
@@ -89,12 +89,12 @@ class Transaction extends Component
     {
         $this->resetPage();
     }
-    
+
     public function updatingFilter($value)
     {
         $this->filter = $value;
     }
-    
+
     public function updateFilter($categoryId)
     {
         if (isset($this->filters[$categoryId])) {
@@ -118,44 +118,44 @@ class Transaction extends Component
     {
         $this->transacType = $typeId;
     }
-    
+
     public function render()
     {
         $this->getCategory();
         $user = Auth::user();
-    
+
         $query = Finance::where('finance_title', 'like', '%' . $this->search . '%')
             ->with('items')
             ->where('teams_id', $user->currentTeam->id);
-    
+
         if (!empty($this->filters)) {
             $query->whereIn('category_id', array_keys($this->filters));
         }
-    
+
         if ($this->transacType !== null) {
             $query->where('transaction_type', $this->transacType);
         }
-    
+
         if ($this->startDate) {
             $query->whereDate('finance_purchase_date', '>=', $this->startDate);
         }
-    
+
         if ($this->endDate) {
             $query->whereDate('finance_purchase_date', '<=', $this->endDate);
         }
-    
+
         $finances = $query->latest('created_at')->paginate(10);
-    
+
         return view('livewire.transaction', [
             'teamFinance' => $finances,
         ]);
     }
-    
-    
+
+
 
   public function predict()
     {
-    
+
         $api_key = 'f0e5b4e57d5656133d84d6ab62f0fddf';
         $account = 'mindee';
         $version = '1';
@@ -254,7 +254,7 @@ class Transaction extends Component
     {
         unset($this->items[$index]);
     }
-    
+
     public function deleteAddContent()
     {
         $this->items = [];
@@ -262,7 +262,7 @@ class Transaction extends Component
         $this->qty = null;
         $this->unitPrice = null;
         $this->totalAmount = null;
-    
+
         $this->finance_title = null;
         $this->finance_amount = null;
         $this->finance_description = null;
@@ -277,7 +277,7 @@ class Transaction extends Component
         $this->image_path = null;
         $this->category_id = null;
         $this->file = null;
-    }    
+    }
     public function getCategory()
     {
         $user = Auth::user();
@@ -292,16 +292,16 @@ class Transaction extends Component
         } else {
             $this->categories = Category::whereNull('teams_id')->latest('created_at')->get();
         }
-    
+
         $this->categories = $this->categories ?? [];
     }
-    
-        
+
+
     public function submitForm()
     {
         try{
         $user = Auth::user();
-        
+
         $this->validate([
             'finance_title'         => 'required',
             'finance_amount'        => 'required|numeric',
@@ -321,7 +321,7 @@ class Transaction extends Component
 
         $finance = Finance::create([
             'user_id'               => Auth::id(),
-            'teams_id'              => $user->currentTeam->id, 
+            'teams_id'              => $user->currentTeam->id,
             'finance_title'         => $this->finance_title,
             'finance_amount'        => $this->finance_amount,
             'finance_description'   => $this->finance_description,
@@ -340,7 +340,7 @@ class Transaction extends Component
         foreach ($this->items as $item) {
             Item::create([
                 'finance_id'           => $finance->id,
-                'teams_id'             => $user->currentTeam->id, 
+                'teams_id'             => $user->currentTeam->id,
                 'item_name'            => $item['name'],
                 'item_quantity'        => $item['qty'],
                 'user_id'              => Auth::id(),
@@ -375,7 +375,7 @@ class Transaction extends Component
     }
 
 
-    
+
     public function deleteFinance($id)
     {
 
@@ -408,24 +408,24 @@ class Transaction extends Component
             session()->flash('error', "Something went wrong!!");
         }
     }
-    
-    
+
+
     public function fetchFinance($id)
     {
         try {
             $user = Auth::user();
-        
+
             if ($user && $user->currentTeam) {
-                $finance = Finance::with('items') 
+                $finance = Finance::with('items')
                     ->where('teams_id', $user->currentTeam->id)
                     ->where('id', $id)
-                    ->latest('created_at') 
+                    ->latest('created_at')
                     ->first();
-    
+
                 if (!$finance) {
                     session()->flash('error', 'Finance not found');
                 } else {
- 
+
                     $this->finance_title = $finance->finance_title;
                     $this->finance_amount = $finance->finance_amount;
                     $this->finance_description = $finance->finance_description;
@@ -458,13 +458,13 @@ class Transaction extends Component
             session()->flash('error', 'Something went wrong!!');
         }
     }
-    
+
     public function updateFinance($id)
     {
         try {
 
         $user = Auth::user();
-    
+
         $this->validate([
             'finance_title'         => 'required',
             'finance_amount'        => 'required|numeric',
@@ -480,11 +480,11 @@ class Transaction extends Component
             'transaction_type.required'      => 'The transaction type is required.',
             'category_id.required'           => 'The category is required.',
         ]);
-    
+
         $this->finan = Finance::findOrFail($id);
-    
+
         $filePath = optional($this->file)->store('public/finance_images');
-    
+
         $this->finan->update([
             'finance_title'         => $this->finance_title,
             'finance_amount'        => $this->finance_amount,
@@ -500,7 +500,7 @@ class Transaction extends Component
             'image_path'            => $filePath,
             'category_id'           => $this->category_id,
         ]);
-    
+
         $this->finan = Finance::findOrFail($id);
         $filePath = optional($this->file)->store('public/finance_images');
         $this->finan->update([
@@ -523,7 +523,7 @@ class Transaction extends Component
 
         foreach ($this->items as $item) {
             $itemId = $item['id'] ?? null;
-            
+
             if ($itemId) {
                 Item::where('id', $itemId)->update([
                     'item_name'         => $item['name'],
@@ -552,7 +552,7 @@ class Transaction extends Component
 
         Item::where('finance_id', $id)->whereNotIn('id', array_filter(array_column($this->items, 'id')))->delete();
 
-    
+
         activity()
             ->causedBy($user)
             ->performedOn($this->finan)
@@ -562,7 +562,7 @@ class Transaction extends Component
                 'title'   => $this->finance_title,
             ])
             ->log('Finance record updated');
-            
+
             session()->flash('success', 'Finance record updated successfully');
 
         } catch (\Exception $e) {
